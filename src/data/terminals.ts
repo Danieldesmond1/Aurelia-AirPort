@@ -1,0 +1,72 @@
+import type { Terminal } from "../types/terminal";
+
+export const terminals: Terminal[] = [
+  {
+    id: "t1",
+    code: "T1",
+    name: "Terminal 1",
+    type: "International",
+    description:
+      "Aurelia's primary international terminal, connecting passengers to major destinations across Europe, Africa, Asia, and the Americas.",
+    gates: 32,
+    airlines: 18,
+    capacity: "14M passengers / year",
+    location: "West Concourse",
+    facilities: [
+      "International check-in",
+      "Immigration",
+      "Security screening",
+      "Premium lounges",
+      "Duty free",
+      "International dining",
+      "Currency exchange",
+      "Baggage services",
+    ],
+    featured: true,
+  },
+  {
+    id: "t2",
+    code: "T2",
+    name: "Terminal 2",
+    type: "Regional",
+    description:
+      "Designed for efficient regional travel, with fast connections and streamlined passenger processing.",
+    gates: 20,
+    airlines: 14,
+    capacity: "9M passengers / year",
+    location: "East Concourse",
+    facilities: [
+      "Regional check-in",
+      "Security screening",
+      "Business lounge",
+      "Dining",
+      "Retail",
+      "Ground transportation",
+      "Baggage services",
+    ],
+    featured: true,
+  },
+  {
+    id: "t3",
+    code: "T3",
+    name: "Terminal 3",
+    type: "Premium",
+    description:
+      "A premium long-haul terminal built around spacious architecture, private lounges, and an elevated passenger experience.",
+    gates: 28,
+    airlines: 10,
+    capacity: "11M passengers / year",
+    location: "North Concourse",
+    facilities: [
+      "Premium check-in",
+      "Fast track security",
+      "Private lounges",
+      "Luxury shopping",
+      "Fine dining",
+      "Business facilities",
+      "Chauffeur services",
+      "Priority baggage",
+    ],
+    featured: true,
+  },
+];
