@@ -1,0 +1,103 @@
+import type { ParkingOption } from "../types/parking";
+
+export const parkingOptions: ParkingOption[] = [
+  {
+    id: "parking-short-stay",
+    name: "Terminal Short Stay",
+    type: "Short Stay",
+    description:
+      "Convenient parking directly beside the passenger terminals for pickups, drop-offs and short visits.",
+    location: "Terminal Forecourt",
+    terminal: "All terminals",
+    operatingHours: "24 hours",
+    priceFrom: "$4 / hour",
+    distance: "2–4 minutes walk",
+    spaces: "2,400 spaces",
+    features: [
+      "Covered parking",
+      "Direct terminal access",
+      "EV charging",
+      "Accessible spaces",
+    ],
+    featured: true,
+  },
+  {
+    id: "parking-long-stay",
+    name: "Aurelia Long Stay",
+    type: "Long Stay",
+    description:
+      "Cost-effective parking for extended trips with complimentary shuttle connections to every terminal.",
+    location: "West Parking Complex",
+    terminal: "All terminals",
+    operatingHours: "24 hours",
+    priceFrom: "$18 / day",
+    distance: "8 minutes by shuttle",
+    spaces: "6,800 spaces",
+    features: [
+      "Free terminal shuttle",
+      "24-hour access",
+      "Pre-booking available",
+      "Security patrols",
+    ],
+    featured: true,
+  },
+  {
+    id: "parking-premium",
+    name: "Premium Parking",
+    type: "Premium",
+    description:
+      "Reserved premium spaces positioned closest to the terminal entrances for a faster, more convenient journey.",
+    location: "North Terminal Complex",
+    terminal: "T1 & T3",
+    operatingHours: "24 hours",
+    priceFrom: "$35 / day",
+    distance: "1–2 minutes walk",
+    spaces: "950 spaces",
+    features: [
+      "Closest terminal access",
+      "Reserved spaces",
+      "Covered parking",
+      "EV charging",
+    ],
+    featured: true,
+  },
+  {
+    id: "parking-valet",
+    name: "Aurelia Valet",
+    type: "Valet",
+    description:
+      "Hand your vehicle to our valet team and continue directly into the terminal.",
+    location: "Departures · Valet Entrance",
+    terminal: "T1 & T3",
+    operatingHours: "04:30 – 00:30",
+    priceFrom: "$50 / day",
+    distance: "Immediate terminal access",
+    spaces: "Dedicated valet facility",
+    features: [
+      "Meet & greet service",
+      "Covered vehicle storage",
+      "Vehicle collection service",
+      "Priority terminal access",
+    ],
+    featured: true,
+  },
+  {
+    id: "parking-accessible",
+    name: "Accessible Parking",
+    type: "Accessible",
+    description:
+      "Dedicated accessible parking spaces positioned close to terminal entrances and passenger assistance points.",
+    location: "All Terminal Parking Areas",
+    terminal: "All terminals",
+    operatingHours: "24 hours",
+    priceFrom: "Standard rates",
+    distance: "Closest available spaces",
+    spaces: "Dedicated bays",
+    features: [
+      "Accessible spaces",
+      "Step-free terminal access",
+      "Assistance points",
+      "Accessible shuttle service",
+    ],
+  },
+];

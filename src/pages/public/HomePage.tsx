@@ -57,6 +57,20 @@ function App() {
             </a>
 
             <a
+              href="transport"
+              className="text-sm text-white/80 transition hover:text-white"
+            >
+              Transport
+            </a>
+
+            <a
+              href="/parking"
+              className="text-sm text-white/80 transition hover:text-white"
+            >
+              Parking
+            </a>
+
+            <a
               href="#"
               className="text-sm text-white/80 transition hover:text-white"
             >
@@ -73,7 +87,9 @@ function App() {
 
           {/* Passenger portal */}
           <button className="hidden items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm backdrop-blur-md transition hover:bg-white/10 md:flex">
-            Passenger Portal
+            <a href="portal">
+              Passenger Portal
+            </a>
             <ArrowRight size={15} />
           </button>
         </div>
