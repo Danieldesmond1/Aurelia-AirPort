@@ -8,6 +8,8 @@ import {
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
+import { useTheme } from "../../context/ThemeContext";
+
 const mobileNavigation = [
   {
     label: "Overview",
@@ -46,18 +48,30 @@ function PassengerHeader({
   lastName = "Morgan",
 }: PassengerHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`;
 
   return (
     <>
-      <header className="relative z-40 flex h-[76px] shrink-0 items-center justify-between border-b border-slate-200 bg-white/95 px-5 backdrop-blur-xl sm:px-7 lg:px-9">
+      <header
+        className={`relative z-40 flex h-[76px] shrink-0 items-center justify-between border-b px-5 backdrop-blur-xl transition-colors duration-500 sm:px-7 lg:px-9 ${
+          isDark
+            ? "border-white/[0.07] bg-[#0D1B2A]/95 text-white"
+            : "border-slate-200 bg-white/95 text-[#111827]"
+        }`}
+      >
         {/* Mobile brand */}
         <div className="flex items-center gap-3 lg:hidden">
           <button
             type="button"
             onClick={() => setMobileMenuOpen((open) => !open)}
-            className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 transition-colors hover:bg-slate-50"
+            className={`flex h-10 w-10 items-center justify-center rounded-xl border transition-colors duration-500 ${
+              isDark
+                ? "border-white/[0.08] bg-[#07111F] text-slate-300 hover:border-[#C9A86A]/30 hover:text-white"
+                : "border-slate-200 text-slate-600 hover:bg-slate-50"
+            }`}
             aria-label={
               mobileMenuOpen ? "Close navigation" : "Open navigation"
             }
@@ -66,12 +80,22 @@ function PassengerHeader({
           </button>
 
           <Link to="/portal" className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#07111F] text-white">
+            <div
+              className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors duration-500 ${
+                isDark
+                  ? "bg-[#07111F] text-[#C9A86A]"
+                  : "bg-[#07111F] text-white"
+              }`}
+            >
               <Plane size={16} strokeWidth={1.8} />
             </div>
 
             <div>
-              <div className="text-[13px] font-semibold tracking-[0.18em] text-[#07111F]">
+              <div
+                className={`text-[13px] font-semibold tracking-[0.18em] ${
+                  isDark ? "text-white" : "text-[#07111F]"
+                }`}
+              >
                 AURELIA
               </div>
 
@@ -84,16 +108,33 @@ function PassengerHeader({
 
         {/* Desktop search */}
         <div className="hidden items-center lg:flex">
-          <div className="flex h-11 w-[300px] items-center gap-3 rounded-xl border border-slate-200 bg-slate-50/70 px-3.5 transition-all focus-within:border-slate-300 focus-within:bg-white">
-            <Search size={17} className="text-slate-400" />
+          <div
+            className={`flex h-11 w-[300px] items-center gap-3 rounded-xl border px-3.5 transition-all duration-500 focus-within:border-[#C9A86A]/40 ${
+              isDark
+                ? "border-white/[0.08] bg-[#07111F] focus-within:bg-[#07111F]"
+                : "border-slate-200 bg-slate-50/70 focus-within:bg-white"
+            }`}
+          >
+            <Search
+              size={17}
+              className={isDark ? "text-slate-500" : "text-slate-400"}
+            />
 
             <input
               type="text"
               placeholder="Search your journey..."
-              className="w-full bg-transparent text-sm text-slate-700 outline-none placeholder:text-slate-400"
+              className={`w-full bg-transparent text-sm outline-none placeholder:text-slate-500 ${
+                isDark ? "text-white" : "text-slate-700"
+              }`}
             />
 
-            <span className="hidden rounded-md border border-slate-200 bg-white px-1.5 py-0.5 text-[9px] font-medium text-slate-400 xl:block">
+            <span
+              className={`hidden rounded-md border px-1.5 py-0.5 text-[9px] font-medium xl:block ${
+                isDark
+                  ? "border-white/[0.08] bg-[#0D1B2A] text-slate-500"
+                  : "border-slate-200 bg-white text-slate-400"
+              }`}
+            >
               ⌘ K
             </span>
           </div>
@@ -103,7 +144,11 @@ function PassengerHeader({
         <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
-            className="relative flex h-10 w-10 items-center justify-center rounded-xl text-slate-500 transition-colors hover:bg-slate-50 hover:text-[#07111F]"
+            className={`relative flex h-10 w-10 items-center justify-center rounded-xl transition-colors duration-500 ${
+              isDark
+                ? "text-slate-400 hover:bg-[#07111F] hover:text-white"
+                : "text-slate-500 hover:bg-slate-50 hover:text-[#07111F]"
+            }`}
             aria-label="Notifications"
           >
             <Bell size={19} strokeWidth={1.7} />
@@ -111,22 +156,38 @@ function PassengerHeader({
             <span className="absolute right-[9px] top-[8px] h-1.5 w-1.5 rounded-full bg-[#C9A86A]" />
           </button>
 
-          <div className="hidden h-7 w-px bg-slate-200 sm:block" />
+          <div
+            className={`hidden h-7 w-px sm:block ${
+              isDark ? "bg-white/[0.08]" : "bg-slate-200"
+            }`}
+          />
 
           <button
             type="button"
-            className="flex items-center gap-2.5 rounded-xl p-1.5 pr-2 transition-colors hover:bg-slate-50"
+            className={`flex items-center gap-2.5 rounded-xl p-1.5 pr-2 transition-colors duration-500 ${
+              isDark
+                ? "hover:bg-[#07111F]"
+                : "hover:bg-slate-50"
+            }`}
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#07111F] text-[11px] font-semibold tracking-wide text-white">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#07111F] text-[11px] font-semibold tracking-wide text-[#C9A86A]">
               {initials}
             </div>
 
             <div className="hidden text-left md:block">
-              <p className="text-xs font-semibold text-slate-800">
+              <p
+                className={`text-xs font-semibold ${
+                  isDark ? "text-white" : "text-slate-800"
+                }`}
+              >
                 {firstName} {lastName.charAt(0)}.
               </p>
 
-              <p className="mt-0.5 text-[10px] text-slate-400">
+              <p
+                className={`mt-0.5 text-[10px] ${
+                  isDark ? "text-slate-500" : "text-slate-400"
+                }`}
+              >
                 Passenger
               </p>
             </div>
@@ -136,7 +197,13 @@ function PassengerHeader({
 
       {/* Mobile navigation */}
       {mobileMenuOpen && (
-        <div className="absolute inset-x-0 top-[76px] z-50 border-b border-slate-200 bg-white px-4 py-4 shadow-xl lg:hidden">
+        <div
+          className={`absolute inset-x-0 top-[76px] z-50 border-b px-4 py-4 shadow-xl transition-colors duration-500 lg:hidden ${
+            isDark
+              ? "border-white/[0.07] bg-[#0D1B2A]"
+              : "border-slate-200 bg-white"
+          }`}
+        >
           <nav className="space-y-1">
             {mobileNavigation.map((item) => (
               <NavLink
@@ -146,10 +213,12 @@ function PassengerHeader({
                 onClick={() => setMobileMenuOpen(false)}
                 className={({ isActive }) =>
                   [
-                    "flex items-center justify-between rounded-xl px-4 py-3.5 text-sm transition-colors",
+                    "flex items-center justify-between rounded-xl px-4 py-3.5 text-sm transition-all duration-300",
                     isActive
                       ? "bg-[#07111F] font-medium text-white"
-                      : "text-slate-600 hover:bg-slate-50",
+                      : isDark
+                        ? "text-slate-400 hover:bg-[#07111F] hover:text-white"
+                        : "text-slate-600 hover:bg-slate-50",
                   ].join(" ")
                 }
               >
@@ -166,11 +235,19 @@ function PassengerHeader({
             ))}
           </nav>
 
-          <div className="mt-3 border-t border-slate-100 pt-3">
+          <div
+            className={`mt-3 border-t pt-3 ${
+              isDark ? "border-white/[0.07]" : "border-slate-100"
+            }`}
+          >
             <Link
               to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center px-4 py-3 text-sm text-slate-500"
+              className={`flex items-center px-4 py-3 text-sm ${
+                isDark
+                  ? "text-slate-500 hover:text-white"
+                  : "text-slate-500"
+              }`}
             >
               Back to Aurelia
             </Link>

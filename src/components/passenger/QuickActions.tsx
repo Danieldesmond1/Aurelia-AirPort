@@ -1,72 +1,114 @@
 import {
-  BriefcaseBusiness,
-  CreditCard,
-  Map,
-  ScanLine,
+  ArrowRight,
+  CalendarDays,
+  CircleHelp,
+  Plane,
+  Ticket,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const actions = [
-  {
-    label: "Check-in",
-    description: "Prepare for your flight",
-    icon: ScanLine,
-    path: "/portal/check-in",
-  },
-  {
-    label: "Boarding pass",
-    description: "Access your pass",
-    icon: CreditCard,
-    path: "/portal/boarding-pass",
-  },
-  {
-    label: "Baggage",
-    description: "Manage your bags",
-    icon: BriefcaseBusiness,
-    path: "/portal/baggage",
-  },
-  {
-    label: "Airport guide",
-    description: "Find your way around",
-    icon: Map,
-    path: "/portal/airport",
-  },
-];
+import { useTheme } from "../../context/ThemeContext";
 
 function QuickActions() {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const actions = [
+    {
+      label: "My Trips",
+      description: "View your bookings",
+      icon: Ticket,
+      to: "/portal/trips",
+    },
+    {
+      label: "Flight Status",
+      description: "Track a flight",
+      icon: Plane,
+      to: "/portal/flights",
+    },
+    {
+      label: "Airport Guide",
+      description: "Explore the airport",
+      icon: CircleHelp,
+      to: "/portal/airport",
+    },
+    {
+      label: "Plan a Trip",
+      description: "Manage your journey",
+      icon: CalendarDays,
+      to: "/portal/trips",
+    },
+  ];
+
   return (
     <section>
-      <div className="mb-4">
+      <div className="mb-5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C9A86A]">
-          Shortcuts
+          Quick access
         </p>
 
-        <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.025em] text-[#07111F]">
-          Quick actions
+        <h2
+          className={`mt-1.5 text-xl font-semibold tracking-[-0.025em] ${
+            isDark ? "text-white" : "text-[#07111F]"
+          }`}
+        >
+          What would you like to do?
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2">
         {actions.map((action) => {
           const Icon = action.icon;
 
           return (
             <Link
               key={action.label}
-              to={action.path}
-              className="group rounded-[20px] border border-slate-200 bg-white p-5 transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_14px_35px_rgba(7,17,31,0.07)]"
+              to={action.to}
+              className={`group flex items-center justify-between rounded-[20px] border p-4 transition-all duration-500 hover:-translate-y-0.5 ${
+                isDark
+                  ? "border-white/[0.07] bg-[#0D1B2A] hover:border-[#C9A86A]/30 hover:shadow-[0_14px_35px_rgba(0,0,0,0.2)]"
+                  : "border-slate-200 bg-white hover:border-[#C9A86A]/50 hover:shadow-[0_14px_35px_rgba(7,17,31,0.07)]"
+              }`}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#07111F] text-[#C9A86A] transition-transform duration-200 group-hover:scale-105">
-                <Icon size={18} strokeWidth={1.7} />
+              <div className="flex min-w-0 items-center gap-3.5">
+                <div
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-[14px] transition-colors duration-500 ${
+                    isDark
+                      ? "bg-[#07111F] text-[#C9A86A]"
+                      : "bg-slate-50 text-[#07111F]"
+                  }`}
+                >
+                  <Icon size={19} strokeWidth={1.8} />
+                </div>
+
+                <div className="min-w-0">
+                  <p
+                    className={`text-sm font-semibold ${
+                      isDark ? "text-white" : "text-[#07111F]"
+                    }`}
+                  >
+                    {action.label}
+                  </p>
+
+                  <p
+                    className={`mt-0.5 truncate text-xs ${
+                      isDark ? "text-slate-500" : "text-slate-400"
+                    }`}
+                  >
+                    {action.description}
+                  </p>
+                </div>
               </div>
 
-              <p className="mt-5 text-sm font-semibold text-[#07111F]">
-                {action.label}
-              </p>
-
-              <p className="mt-1 text-[11px] leading-5 text-slate-400">
-                {action.description}
-              </p>
+              <ArrowRight
+                size={17}
+                strokeWidth={1.8}
+                className={`ml-3 shrink-0 transition-all duration-500 group-hover:translate-x-1 ${
+                  isDark
+                    ? "text-slate-600 group-hover:text-[#C9A86A]"
+                    : "text-slate-300 group-hover:text-[#C9A86A]"
+                }`}
+              />
             </Link>
           );
         })}

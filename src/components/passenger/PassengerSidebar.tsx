@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
+import { useTheme } from "../../context/ThemeContext";
+
 const navigation = [
   {
     label: "Overview",
@@ -49,19 +51,35 @@ const accountNavigation = [
 
 function PassengerSidebar() {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   return (
-    <aside className="hidden h-screen w-[270px] shrink-0 flex-col border-r border-slate-200 bg-white lg:flex">
+    <aside
+      className={`sticky top-0 hidden h-screen w-[270px] shrink-0 flex-col border-r transition-colors duration-500 lg:flex ${
+        isDark
+          ? "border-white/[0.07] bg-[#0D1B2A]"
+          : "border-slate-200 bg-white"
+      }`}
+    >
       {/* Brand */}
-      <div className="flex h-[88px] items-center border-b border-slate-100 px-7">
+      <div
+        className={`flex h-[88px] shrink-0 items-center border-b px-7 ${
+          isDark ? "border-white/[0.07]" : "border-slate-100"
+        }`}
+      >
         <NavLink to="/portal" className="group">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#07111F] text-white transition-transform duration-300 group-hover:rotate-[-8deg]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#07111F] text-[#C9A86A] transition-transform duration-300 group-hover:rotate-[-8deg]">
               <Plane size={19} strokeWidth={1.8} />
             </div>
 
             <div>
-              <div className="text-[15px] font-semibold tracking-[0.22em] text-[#07111F]">
+              <div
+                className={`text-[15px] font-semibold tracking-[0.22em] ${
+                  isDark ? "text-white" : "text-[#07111F]"
+                }`}
+              >
                 AURELIA
               </div>
 
@@ -73,9 +91,13 @@ function PassengerSidebar() {
         </NavLink>
       </div>
 
-      {/* Navigation */}
-      <div className="flex-1 overflow-y-auto px-4 py-7">
-        <p className="px-3 pb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+      {/* Scrollable navigation */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-7">
+        <p
+          className={`px-3 pb-3 text-[10px] font-semibold uppercase tracking-[0.18em] ${
+            isDark ? "text-slate-600" : "text-slate-400"
+          }`}
+        >
           Journey
         </p>
 
@@ -90,10 +112,12 @@ function PassengerSidebar() {
                 end={item.end}
                 className={({ isActive }) =>
                   [
-                    "group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-200",
+                    "group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-300",
                     isActive
                       ? "bg-[#07111F] font-medium text-white shadow-sm"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-[#07111F]",
+                      : isDark
+                        ? "text-slate-400 hover:bg-[#07111F] hover:text-white"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-[#07111F]",
                   ].join(" ")
                 }
               >
@@ -105,7 +129,9 @@ function PassengerSidebar() {
                       className={
                         isActive
                           ? "text-[#C9A86A]"
-                          : "text-slate-400 transition-colors group-hover:text-slate-600"
+                          : isDark
+                            ? "text-slate-600 transition-colors group-hover:text-slate-300"
+                            : "text-slate-400 transition-colors group-hover:text-slate-600"
                       }
                     />
 
@@ -117,9 +143,17 @@ function PassengerSidebar() {
           })}
         </nav>
 
-        <div className="my-7 h-px bg-slate-100" />
+        <div
+          className={`my-7 h-px ${
+            isDark ? "bg-white/[0.07]" : "bg-slate-100"
+          }`}
+        />
 
-        <p className="px-3 pb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+        <p
+          className={`px-3 pb-3 text-[10px] font-semibold uppercase tracking-[0.18em] ${
+            isDark ? "text-slate-600" : "text-slate-400"
+          }`}
+        >
           Account
         </p>
 
@@ -133,10 +167,12 @@ function PassengerSidebar() {
                 to={item.path}
                 className={({ isActive }) =>
                   [
-                    "group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-200",
+                    "group flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm transition-all duration-300",
                     isActive
                       ? "bg-[#07111F] font-medium text-white shadow-sm"
-                      : "text-slate-600 hover:bg-slate-50 hover:text-[#07111F]",
+                      : isDark
+                        ? "text-slate-400 hover:bg-[#07111F] hover:text-white"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-[#07111F]",
                   ].join(" ")
                 }
               >
@@ -148,7 +184,9 @@ function PassengerSidebar() {
                       className={
                         isActive
                           ? "text-[#C9A86A]"
-                          : "text-slate-400 transition-colors group-hover:text-slate-600"
+                          : isDark
+                            ? "text-slate-600 transition-colors group-hover:text-slate-300"
+                            : "text-slate-400 transition-colors group-hover:text-slate-600"
                       }
                     />
 
@@ -162,11 +200,19 @@ function PassengerSidebar() {
       </div>
 
       {/* Back to airport */}
-      <div className="border-t border-slate-100 p-4">
+      <div
+        className={`shrink-0 border-t p-4 ${
+          isDark ? "border-white/[0.07]" : "border-slate-100"
+        }`}
+      >
         <button
           type="button"
           onClick={() => navigate("/")}
-          className="group flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm text-slate-500 transition-colors hover:bg-slate-50 hover:text-[#07111F]"
+          className={`group flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left text-sm transition-all duration-300 ${
+            isDark
+              ? "text-slate-500 hover:bg-[#07111F] hover:text-white"
+              : "text-slate-500 hover:bg-slate-50 hover:text-[#07111F]"
+          }`}
         >
           <ArrowLeft
             size={17}

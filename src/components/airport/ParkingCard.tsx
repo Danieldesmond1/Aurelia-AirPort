@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 
 import type { ParkingOption } from "../../types/parking";
+import { useTheme } from "../../context/ThemeContext";
 
 interface ParkingCardProps {
   option: ParkingOption;
@@ -24,6 +25,10 @@ const typeIcons = {
 export default function ParkingCard({
   option,
 }: ParkingCardProps) {
+  const { theme } = useTheme();
+
+  const isDark = theme === "dark";
+
   const Icon = typeIcons[option.type];
 
   return (
@@ -31,17 +36,25 @@ export default function ParkingCard({
       to={`/parking/${option.id}`}
       className="group block h-full"
     >
-      <article className="flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white transition-all duration-500 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_24px_70px_rgba(15,23,42,0.10)]">
+      <article
+        className={`flex h-full flex-col overflow-hidden rounded-[28px] border transition-all duration-500 hover:-translate-y-1 ${
+          isDark
+            ? "border-white/[0.08] bg-[#0D1B2A] hover:border-white/[0.14] hover:shadow-[0_24px_70px_rgba(0,0,0,0.28)]"
+            : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-[0_24px_70px_rgba(15,23,42,0.10)]"
+        }`}
+      >
         {/* Visual header */}
         <div className="relative overflow-hidden bg-[#07111F] px-7 pb-8 pt-7 text-white">
           <div className="absolute -right-16 -top-20 h-48 w-48 rounded-full bg-[#C9A86A]/10 blur-3xl transition-transform duration-700 group-hover:scale-125" />
 
+          <div className="absolute -bottom-24 -left-20 h-40 w-40 rounded-full bg-blue-500/[0.04] blur-3xl" />
+
           <div className="relative flex items-start justify-between gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur transition-all duration-300 group-hover:bg-[#C9A86A] group-hover:text-[#07111F]">
               <Icon size={24} strokeWidth={1.7} />
             </div>
 
-            <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-300">
+            <span className="rounded-full border border-white/10 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-300 backdrop-blur">
               {option.type}
             </span>
           </div>
@@ -59,33 +72,61 @@ export default function ParkingCard({
 
         {/* Body */}
         <div className="flex flex-1 flex-col p-7">
-          <p className="text-sm leading-6 text-slate-500">
+          <p
+            className={`text-sm leading-6 ${
+              isDark ? "text-slate-400" : "text-slate-500"
+            }`}
+          >
             {option.description}
           </p>
 
-          <div className="mt-7 space-y-3 border-t border-slate-100 pt-6">
-            <div className="flex items-center gap-3 text-sm text-slate-600">
+          <div
+            className={`mt-7 space-y-3 border-t pt-6 ${
+              isDark
+                ? "border-white/[0.07]"
+                : "border-slate-100"
+            }`}
+          >
+            <div
+              className={`flex items-center gap-3 text-sm ${
+                isDark ? "text-slate-300" : "text-slate-600"
+              }`}
+            >
               <MapPin
                 size={16}
-                className="shrink-0 text-slate-400"
+                className={`shrink-0 ${
+                  isDark ? "text-slate-500" : "text-slate-400"
+                }`}
               />
 
               <span>{option.location}</span>
             </div>
 
-            <div className="flex items-center gap-3 text-sm text-slate-600">
+            <div
+              className={`flex items-center gap-3 text-sm ${
+                isDark ? "text-slate-300" : "text-slate-600"
+              }`}
+            >
               <ParkingCircle
                 size={16}
-                className="shrink-0 text-slate-400"
+                className={`shrink-0 ${
+                  isDark ? "text-slate-500" : "text-slate-400"
+                }`}
               />
 
               <span>{option.spaces}</span>
             </div>
 
-            <div className="flex items-center gap-3 text-sm text-slate-600">
+            <div
+              className={`flex items-center gap-3 text-sm ${
+                isDark ? "text-slate-300" : "text-slate-600"
+              }`}
+            >
               <Clock3
                 size={16}
-                className="shrink-0 text-slate-400"
+                className={`shrink-0 ${
+                  isDark ? "text-slate-500" : "text-slate-400"
+                }`}
               />
 
               <span>{option.operatingHours}</span>
@@ -94,23 +135,44 @@ export default function ParkingCard({
 
           <div className="mt-auto flex items-end justify-between gap-4 pt-7">
             <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
+              <p
+                className={`text-[10px] font-semibold uppercase tracking-[0.15em] ${
+                  isDark ? "text-slate-500" : "text-slate-400"
+                }`}
+              >
                 From
               </p>
 
-              <p className="mt-1 text-lg font-semibold text-slate-950">
+              <p
+                className={`mt-1 text-lg font-semibold ${
+                  isDark ? "text-white" : "text-slate-950"
+                }`}
+              >
                 {option.priceFrom}
               </p>
 
               {option.distance && (
-                <p className="mt-1 text-xs text-slate-400">
+                <p
+                  className={`mt-1 text-xs ${
+                    isDark ? "text-slate-500" : "text-slate-400"
+                  }`}
+                >
                   {option.distance}
                 </p>
               )}
             </div>
 
-            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 transition-all duration-300 group-hover:border-slate-950 group-hover:bg-slate-950 group-hover:text-white">
-              <ArrowUpRight size={18} />
+            <div
+              className={`flex h-11 w-11 items-center justify-center rounded-full border transition-all duration-300 ${
+                isDark
+                  ? "border-white/10 text-slate-300 group-hover:border-[#C9A86A] group-hover:bg-[#C9A86A] group-hover:text-[#07111F]"
+                  : "border-slate-200 text-slate-700 group-hover:border-slate-950 group-hover:bg-slate-950 group-hover:text-white"
+              }`}
+            >
+              <ArrowUpRight
+                size={18}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
             </div>
           </div>
         </div>

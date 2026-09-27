@@ -6,12 +6,16 @@ import {
 } from "lucide-react";
 
 import type { PassengerTrip } from "../../types/passenger";
+import { useTheme } from "../../context/ThemeContext";
 
 interface JourneyProgressProps {
   trip: PassengerTrip;
 }
 
 function JourneyProgress({ trip }: JourneyProgressProps) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
   const steps = [
     {
       label: "Booking confirmed",
@@ -50,13 +54,23 @@ function JourneyProgress({ trip }: JourneyProgressProps) {
   ];
 
   return (
-    <section className="rounded-[24px] border border-slate-200 bg-white p-6 sm:p-7">
+    <section
+      className={`rounded-[24px] border p-6 transition-colors duration-500 sm:p-7 ${
+        isDark
+          ? "border-white/[0.07] bg-[#0D1B2A] text-white"
+          : "border-slate-200 bg-white text-[#07111F]"
+      }`}
+    >
       <div className="mb-7">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C9A86A]">
           Your journey
         </p>
 
-        <h2 className="mt-1.5 text-xl font-semibold tracking-[-0.025em] text-[#07111F]">
+        <h2
+          className={`mt-1.5 text-xl font-semibold tracking-[-0.025em] ${
+            isDark ? "text-white" : "text-[#07111F]"
+          }`}
+        >
           Journey progress
         </h2>
       </div>
@@ -71,10 +85,12 @@ function JourneyProgress({ trip }: JourneyProgressProps) {
               <div className="flex flex-col items-center">
                 <div
                   className={[
-                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border",
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors duration-500",
                     step.complete
                       ? "border-[#07111F] bg-[#07111F] text-[#C9A86A]"
-                      : "border-slate-200 bg-white text-slate-300",
+                      : isDark
+                        ? "border-white/[0.08] bg-[#07111F] text-slate-600"
+                        : "border-slate-200 bg-white text-slate-300",
                   ].join(" ")}
                 >
                   <Icon size={16} strokeWidth={1.8} />
@@ -83,10 +99,14 @@ function JourneyProgress({ trip }: JourneyProgressProps) {
                 {!isLast && (
                   <div
                     className={[
-                      "my-1 w-px flex-1 min-h-[38px]",
+                      "my-1 w-px flex-1 min-h-[38px] transition-colors duration-500",
                       step.complete
-                        ? "bg-[#07111F]/20"
-                        : "bg-slate-200",
+                        ? isDark
+                          ? "bg-[#C9A86A]/25"
+                          : "bg-[#07111F]/20"
+                        : isDark
+                          ? "bg-white/[0.08]"
+                          : "bg-slate-200",
                     ].join(" ")}
                   />
                 )}
@@ -95,16 +115,24 @@ function JourneyProgress({ trip }: JourneyProgressProps) {
               <div className={isLast ? "pb-0" : "pb-6"}>
                 <p
                   className={[
-                    "text-sm font-semibold",
+                    "text-sm font-semibold transition-colors duration-500",
                     step.complete
-                      ? "text-[#07111F]"
-                      : "text-slate-400",
+                      ? isDark
+                        ? "text-white"
+                        : "text-[#07111F]"
+                      : isDark
+                        ? "text-slate-500"
+                        : "text-slate-400",
                   ].join(" ")}
                 >
                   {step.label}
                 </p>
 
-                <p className="mt-1 text-xs leading-5 text-slate-400">
+                <p
+                  className={`mt-1 text-xs leading-5 transition-colors duration-500 ${
+                    isDark ? "text-slate-500" : "text-slate-400"
+                  }`}
+                >
                   {step.description}
                 </p>
               </div>
