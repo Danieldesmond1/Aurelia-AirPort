@@ -159,7 +159,7 @@ function UpcomingTripCard({ trip }: UpcomingTripCardProps) {
                 isDark ? "text-white" : "text-[#07111F]"
               }`}
             >
-              {trip.date}
+              {trip.departureDate}
             </p>
           </div>
 

@@ -17,7 +17,6 @@ import { useTheme } from "../../context/ThemeContext";
 
 function PassengerAirportGuidePage() {
   const {
-    profile,
     trips,
     loading: passengerLoading,
   } = usePassenger();
